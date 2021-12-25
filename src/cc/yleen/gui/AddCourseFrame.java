@@ -92,9 +92,11 @@ public class AddCourseFrame extends BaseFrame {
                 return;
             }
             try {
-                int result = panel_course.adminDao.addCourse(new Course(cno, cname, credit));
+                Course course = new Course(cno, cname, credit);
+                int result = panel_course.adminDao.addCourse(course);
                 if (result > 0) {
                     dispose();
+                    panel_course.addCourseToTable(course);
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "添加失败！",

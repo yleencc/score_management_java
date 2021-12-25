@@ -122,6 +122,17 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
         table.updateUI();
     }
 
+    // 添加课程到表格（不执行数据库）
+    public void addCourseToTable(Course course) throws SQLException {
+        courses.add(course);
+        Vector line = new Vector();
+        line.add(course.getCno());
+        line.add(course.getName());
+        line.add(course.getCredit());
+        rowData.add(line);
+        table.updateUI();
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
     }
