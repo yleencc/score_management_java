@@ -21,10 +21,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Vector;
 
-public class StudentMainFrame extends BaseFrame implements MenuListener, ActionListener, MouseListener {
+public class StudentMainFrame extends BaseFrame implements MenuListener, ActionListener, MouseListener, ItemListener {
     private JPanel panel_student_info = new JPanel();
     private JScrollPane panel_grade = new JScrollPane();
     private JPanel panel_tools = new JPanel();
@@ -37,7 +36,6 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
 
     private JButton button_edit = new JButton("编辑");
     private JButton button_save = new JButton("保存修改");
-    private JButton button_filter = new JButton("筛选");
     private JButton button_refresh_student = new JButton("刷新个人信息");
     private JButton button_refresh_table = new JButton("刷新表格");
 
@@ -49,11 +47,13 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
     private JTextField input_class = new JTextField();
     private JTextField input_birthday = new JTextField();
     private JComboBox<String> select_sex = new JComboBox<String>();
+    private JComboBox<String> select_course = new JComboBox<String>();
 
     private String sno;
     private Student student;
     StudentDao studentDao = new StudentDao();
 
+    ArrayList<Grade> allGradeList = new ArrayList<Grade>();
     private DefaultTableModel model;
     private Vector columnName, rowData;
     private JTable table = new JTable() {
@@ -66,8 +66,8 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
     public StudentMainFrame(String sno) {
         this.sno = sno;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        width = (int) (ScreenSizeUtil.getWidth() / 1.5);
-        height = (int) (ScreenSizeUtil.getHeight() / 1.5);
+        width = (int) (ScreenSizeUtil.getWidth() / 1.7);
+        height = (int) (ScreenSizeUtil.getHeight() / 1.7);
         this.setBounds(width, height, width, height);
         this.setTitle("成绩管理系统 - 学生端");
         this.setIconImage(ImgUtil.getImage("cc/yleen/images/book.png"));
@@ -129,6 +129,8 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         panel_tools.setLayout(new GridBagLayout());
         panel_tools.add(button_refresh_student);
         panel_tools.add(button_refresh_table);
+        panel_tools.add(new JLabel("筛选课程："));
+        panel_tools.add(select_course);
         //设置列名
         columnName = new Vector();
         rowData = new Vector();
@@ -257,10 +259,10 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         popMenu.add(editItem);
         button_save.addActionListener(this);
         button_edit.addActionListener(this);
-        button_filter.addActionListener(this);
         button_refresh_student.addActionListener(this);
         button_refresh_table.addActionListener(this);
         button_save.setEnabled(false);
+        select_course.addItemListener(this);
     }
 
     private void requestStudentInfo() throws SQLException {
@@ -276,19 +278,23 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
     }
 
     private void requestGrade() throws SQLException {
-        rowData.clear();
-        ArrayList<Grade> result = studentDao.queryStudentAllGrade(this.sno);
-        for (Grade gradeDate : result) {
+        select_course.removeAllItems(); // 清空课程的所有选项
+        select_course.addItem("全部");
+        rowData.clear(); // 清空表格数据
+        allGradeList.clear();
+        allGradeList.addAll(studentDao.queryStudentAllGrade(this.sno));
+        for (Grade gradeData : allGradeList) {
             Vector line = new Vector();
-            line.add(gradeDate.getSno());
-            line.add(gradeDate.getStudentName());
-            line.add(gradeDate.getCno());
-            line.add(gradeDate.getCourseName());
-            line.add(gradeDate.getCredit());
-            line.add(gradeDate.getGrade());
+            line.add(gradeData.getSno());
+            line.add(gradeData.getStudentName());
+            line.add(gradeData.getCno());
+            line.add(gradeData.getCourseName());
+            line.add(gradeData.getCredit());
+            line.add(gradeData.getGrade());
             rowData.add(line);
+            select_course.addItem(gradeData.getCourseName());
         }
-        table.setModel(model);
+        table.updateUI();
     }
 
     private void setDisableFormComponents() {
@@ -344,7 +350,6 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         } else if (e.getSource() == button_edit) {
             setEnableFormComponents();
             button_save.setEnabled(true);
-        } else if (e.getSource() == button_filter) {
         } else if (e.getSource() == button_refresh_table) {
             try {
                 requestGrade();
@@ -360,6 +365,27 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
                 showRequestFailed(e2);
             }
         }
+    }
+
+    // 筛选成绩表（自动取得课程选择框的内容）
+    private void filterGradesTable() {
+        String courseName = (String) select_course.getSelectedItem();
+        int index = select_course.getSelectedIndex();
+        rowData.clear(); // 清空表格数据
+        for (Grade gradeData : allGradeList) {
+            // 过滤课程名
+            if (index == 0 || gradeData.getCourseName().equals(courseName)) {
+                Vector line = new Vector();
+                line.add(gradeData.getSno());
+                line.add(gradeData.getStudentName());
+                line.add(gradeData.getCno());
+                line.add(gradeData.getCourseName());
+                line.add(gradeData.getCredit());
+                line.add(gradeData.getGrade());
+                rowData.add(line);
+            }
+        }
+        table.updateUI();
     }
 
     @Override
@@ -384,5 +410,12 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        if (e.getSource() == select_course) {
+            filterGradesTable();
+        }
     }
 }
