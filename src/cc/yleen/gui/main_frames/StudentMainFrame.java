@@ -131,10 +131,30 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         panel_grade.setBackground(new Color(0xFFDCD8));
         panel_student_info.setLayout(new GridBagLayout());
         panel_tools.setLayout(new GridBagLayout());
-        panel_tools.add(button_refresh_student);
-        panel_tools.add(button_refresh_table);
-        panel_tools.add(new JLabel("筛选课程："));
-        panel_tools.add(select_course);
+        JLabel label = new JLabel("筛选课程：");
+        label.setHorizontalAlignment(SwingConstants.RIGHT);
+        //
+        panel_tools.add(button_refresh_table, new GBC(0, 0, 1, 1)
+                .setFill(GBC.HORIZONTAL)
+                .setIpad(0, 0)
+                .setInsets(0, 10, 0, 0)
+                .setWeight(20, 20));
+        panel_tools.add(new JLabel(" "), new GBC(1, 0, 1, 1)
+                .setFill(GBC.HORIZONTAL)
+                .setIpad(0, 0)
+                .setInsets(0, 10, 0, 0)
+                .setWeight(100, 20));
+        panel_tools.add(label, new GBC(2, 0, 1, 1)
+                .setFill(GBC.HORIZONTAL)
+                .setIpad(0, 0)
+                .setInsets(0, 10, 0, 0)
+                .setWeight(20, 20));
+        panel_tools.add(select_course, new GBC(3, 0, 1, 1)
+                .setFill(GBC.HORIZONTAL)
+                .setIpad(0, 0)
+                .setInsets(0, 10, 0, 0)
+                .setWeight(20, 20));
+
         //设置列名
         columnName = new Vector();
         rowData = new Vector();
@@ -233,13 +253,17 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
                 .setIpad(0, 0)
                 .setWeight(50, 10));
         //
-        panel_student_info.add(button_edit, new GBC(1, 9, 4, 1)
+        panel_student_info.add(button_refresh_student, new GBC(1, 9, 4, 1)
                 .setFill(GBC.HORIZONTAL)
-                .setIpad(0, 0)
+                .setInsets(0, 20, 0, 20)
                 .setWeight(20, 10));
-        panel_student_info.add(button_save, new GBC(1, 10, 4, 1)
+        panel_student_info.add(button_edit, new GBC(1, 10, 4, 1)
                 .setFill(GBC.HORIZONTAL)
-                .setIpad(0, 0)
+                .setInsets(0, 20, 0, 20)
+                .setWeight(20, 10));
+        panel_student_info.add(button_save, new GBC(1, 11, 4, 1)
+                .setFill(GBC.HORIZONTAL)
+                .setInsets(0, 20, 0, 20)
                 .setWeight(20, 10));
         panel_student_info.add(new JLabel(" "), new GBC(0, 0, 1, 11)
                 .setFill(GBC.HORIZONTAL)
