@@ -3,9 +3,9 @@ package cc.yleen.model;
 public class Course {
     private String cno;
     private String name;
-    private String credit;
+    private float credit;
 
-    public Course(String cno, String name, String credit) {
+    public Course(String cno, String name, float credit) {
         this.cno = cno;
         this.name = name;
         this.credit = credit;
@@ -27,11 +27,11 @@ public class Course {
         this.name = name;
     }
 
-    public String getCredit() {
+    public float getCredit() {
         return credit;
     }
 
-    public void setCredit(String credit) {
+    public void setCredit(float credit) {
         this.credit = credit;
     }
 }

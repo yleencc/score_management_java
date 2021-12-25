@@ -5,6 +5,7 @@ import cc.yleen.config.Theme;
 import cc.yleen.dao.LoginDao;
 import cc.yleen.gui.component.DefaultComponents;
 import cc.yleen.gui.component.GBC;
+import cc.yleen.gui.main_frames.AdminMainFrame;
 import cc.yleen.gui.main_frames.StudentMainFrame;
 import cc.yleen.gui.main_frames.TeacherMainFrame;
 import cc.yleen.gui.panel.BackgroundJPanel;
@@ -57,9 +58,9 @@ public class LoginFrame extends BaseFrame {
         radio_student.doClick();
         this.add(bgPanel);
         this.setVisible(true);
-        input_account.setText("1");
-        input_pass.setText("20211224");
-        radio_teacher.doClick();
+        input_account.setText("admin");
+        input_pass.setText("admin");
+        radio_admin.doClick();
     }
 
     private void initView() {
@@ -219,6 +220,8 @@ public class LoginFrame extends BaseFrame {
                             new TeacherMainFrame(input_account.getText());
                             break;
                         case admin:
+                            new AdminMainFrame(input_account.getText());
+                            break;
                         default:
                             new StudentMainFrame(input_account.getText());
                     }

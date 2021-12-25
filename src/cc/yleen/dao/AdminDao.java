@@ -1,7 +1,7 @@
 package cc.yleen.dao;
 
 import cc.yleen.dao.interfaces.AdminDaoInter;
-import cc.yleen.model.Grade;
+import cc.yleen.model.Course;
 import cc.yleen.model.Student;
 import cc.yleen.model.Teacher;
 import cc.yleen.utils.MysqlConnect;
@@ -23,20 +23,28 @@ public class AdminDao implements AdminDaoInter {
     }
 
     @Override
-    public ArrayList<Grade> queryAllGrade() throws SQLException {
-        String str = ("SELECT * FROM student, course, sc WHERE student.Sno = sc.Sno AND course.Cno = sc.Cno");
+    public ArrayList<Course> queryAllCourse() throws SQLException {
+        String str = ("SELECT * FROM course");
         PreparedStatement pstmt = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
         ResultSet result = pstmt.executeQuery();
-        ArrayList<Grade> grades = new ArrayList<>();
+        ArrayList<Course> courses = new ArrayList<>();
         while (result.next()) {
-            String sno = result.getString("Sno");
-            String sname = result.getString("Sname");
             String cno = result.getString("Cno");
             String cname = result.getString("Cname");
-            float grade = result.getFloat("Grade");
             float credit = result.getFloat("Credit");
-            grades.add(new Grade(sno, sname, cno, cname, grade, credit));
+            courses.add(new Course(cno, cname, credit));
         }
-        return grades;
+        return courses;
+    }
+
+    @Override
+    public int updateCourse(Course course) throws SQLException {
+        String str = "UPDATE course SET Cno=?,Cname=?,Credit=? WHERE Cno=?";
+        PreparedStatement ppst = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
+        ppst.setString(1, course.getCno());
+        ppst.setString(2, course.getName());
+        ppst.setFloat(3, course.getCredit());
+        ppst.setString(4, course.getCno());
+        return ppst.executeUpdate();
     }
 }

@@ -1,5 +1,6 @@
 package cc.yleen.dao.interfaces;
 
+import cc.yleen.model.Course;
 import cc.yleen.model.Grade;
 import cc.yleen.model.Student;
 import cc.yleen.model.Teacher;
@@ -12,5 +13,7 @@ public interface AdminDaoInter {
 
     ArrayList<Teacher> getAllTeachers() throws SQLException;
 
-    ArrayList<Grade> queryAllGrade() throws SQLException;
+    ArrayList<Course> queryAllCourse() throws SQLException;
+    
+    int updateCourse(Course course) throws SQLException;
 }

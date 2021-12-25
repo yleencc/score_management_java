@@ -14,9 +14,6 @@ import cc.yleen.utils.ImgUtil;
 import cc.yleen.utils.ScreenSizeUtil;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -24,7 +21,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class TeacherMainFrame extends BaseFrame implements MenuListener, ActionListener, MouseListener, ItemListener {
+public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemListener {
     private JPanel panel_student_info = new JPanel();
     private JScrollPane panel_grade = new JScrollPane();
     private JPanel panel_tools = new JPanel();
@@ -59,8 +56,8 @@ public class TeacherMainFrame extends BaseFrame implements MenuListener, ActionL
     private JTable table = new JTable() {
         @Override
         public boolean isCellEditable(int row, int column) {
-            return column == 5;
-        }//表格不允许被编辑
+            return column == 5; // 表格列索引非5不允许被编辑
+        }
     };
 
     public TeacherMainFrame(String tno) {
@@ -361,21 +358,6 @@ public class TeacherMainFrame extends BaseFrame implements MenuListener, ActionL
     }
 
     @Override
-    public void menuSelected(MenuEvent e) {
-
-    }
-
-    @Override
-    public void menuDeselected(MenuEvent e) {
-
-    }
-
-    @Override
-    public void menuCanceled(MenuEvent e) {
-
-    }
-
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == button_save) {
             try {
@@ -433,30 +415,6 @@ public class TeacherMainFrame extends BaseFrame implements MenuListener, ActionL
             }
         }
         table.updateUI();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 
     @Override
