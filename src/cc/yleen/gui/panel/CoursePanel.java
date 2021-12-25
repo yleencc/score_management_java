@@ -1,6 +1,7 @@
 package cc.yleen.gui.panel;
 
 import cc.yleen.dao.AdminDao;
+import cc.yleen.gui.AddCourseFrame;
 import cc.yleen.gui.BasePanel;
 import cc.yleen.gui.component.GBC;
 import cc.yleen.model.Course;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class CoursePanel extends BasePanel implements MouseListener, ActionListener {
-    private AdminDao adminDao;
+    public AdminDao adminDao;
     ArrayList<Course> courses = new ArrayList<Course>();
 
     private JScrollPane panel_table = new JScrollPane();
@@ -193,6 +194,8 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
                     showRefreshFailed(ex);
                 }
             }
+        } else if (e.getSource() == itemAdd) {
+            new AddCourseFrame(this);
         }
     }
 }

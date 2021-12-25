@@ -39,17 +39,38 @@ public class AdminDao implements AdminDaoInter {
 
     @Override
     public int addCourse(Course course) throws SQLException {
-        return 0;
+        String str_add = "INSERT INTO course VALUES(?,?,?)";
+        PreparedStatement ppst = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str_add);
+        ppst.setString(1, course.getCno());
+        ppst.setString(2, course.getName());
+        ppst.setFloat(3, course.getCredit());
+        return ppst.executeUpdate();
     }
 
     @Override
-    public int addTeacher(Course course) throws SQLException {
-        return 0;
+    public int addTeacher(Teacher teacher) throws SQLException {
+        String str_add = "INSERT INTO teacher VALUES(?,?,?,?,?)";
+        PreparedStatement ppst = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str_add);
+        ppst.setString(1, teacher.getTno());
+        ppst.setString(2, teacher.getName());
+        ppst.setDate(3, teacher.getBirthday());
+        ppst.setString(4, teacher.getSex());
+        ppst.setString(5, teacher.getCno());
+        return ppst.executeUpdate();
     }
 
     @Override
-    public int addStudent(Course course) throws SQLException {
-        return 0;
+    public int addStudent(Student student) throws SQLException {
+        String str_add = "INSERT INTO student VALUES(?,?,?,?,?,?,?)";
+        PreparedStatement ppst = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str_add);
+        ppst.setString(1, student.getSno());
+        ppst.setString(2, student.getName());
+        ppst.setString(3, student.getSex());
+        ppst.setDate(4, student.getBirthday());
+        ppst.setString(5, student.getSchool());
+        ppst.setString(6, student.getMajor());
+        ppst.setString(7, student.getClassName());
+        return ppst.executeUpdate();
     }
 
     @Override
@@ -64,19 +85,19 @@ public class AdminDao implements AdminDaoInter {
     }
 
     @Override
-    public int updateTeacher(Course course) throws SQLException {
+    public int updateTeacher(Teacher teacher) throws SQLException {
         return 0;
     }
 
     @Override
-    public int updateStudent(Course course) throws SQLException {
+    public int updateStudent(Student student) throws SQLException {
         return 0;
     }
 
     @Override
     public int removeCourse(String cno) throws SQLException {
         String str_rm = "DELETE FROM course WHERE cno=?";
-        PreparedStatement ppst = (PreparedStatement)  MysqlConnect.getInstance().prepareStatement(str_rm);
+        PreparedStatement ppst = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str_rm);
         ppst.setString(1, cno);
         return ppst.executeUpdate();
     }

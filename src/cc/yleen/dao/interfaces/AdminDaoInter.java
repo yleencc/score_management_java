@@ -17,15 +17,15 @@ public interface AdminDaoInter {
 
     int addCourse(Course course) throws SQLException;
 
-    int addTeacher(Course course) throws SQLException;
+    int addTeacher(Teacher course) throws SQLException;
 
-    int addStudent(Course course) throws SQLException;
+    int addStudent(Student course) throws SQLException;
 
     int updateCourse(Course course) throws SQLException;
 
-    int updateTeacher(Course course) throws SQLException;
+    int updateTeacher(Teacher course) throws SQLException;
 
-    int updateStudent(Course course) throws SQLException;
+    int updateStudent(Student course) throws SQLException;
 
     int removeCourse(String cno) throws SQLException;
 
