@@ -23,7 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class StudentMainFrame extends BaseFrame implements MenuListener, ActionListener, MouseListener, ItemListener {
+public class TeacherMainFrame extends BaseFrame implements MenuListener, ActionListener, MouseListener, ItemListener {
     private JPanel panel_student_info = new JPanel();
     private JScrollPane panel_grade = new JScrollPane();
     private JPanel panel_tools = new JPanel();
@@ -63,7 +63,7 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         }//表格不允许被编辑
     };
 
-    public StudentMainFrame(String sno) {
+    public TeacherMainFrame(String sno) {
         this.sno = sno;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         width = (int) (ScreenSizeUtil.getWidth() / 1.7);

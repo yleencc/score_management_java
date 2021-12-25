@@ -6,6 +6,7 @@ import cc.yleen.dao.LoginDao;
 import cc.yleen.gui.component.DefaultComponents;
 import cc.yleen.gui.component.GBC;
 import cc.yleen.gui.main_frames.StudentMainFrame;
+import cc.yleen.gui.main_frames.TeacherMainFrame;
 import cc.yleen.gui.panel.BackgroundJPanel;
 import cc.yleen.utils.ImgUtil;
 import cc.yleen.utils.MysqlConnect;
@@ -17,6 +18,9 @@ import java.awt.event.*;
 import java.sql.SQLException;
 
 public class LoginFrame extends BaseFrame {
+    LoginDao loginDao = new LoginDao();
+    private Const.AccountType type = Const.AccountType.student; // 用户类型
+
     private JLabel title = DefaultComponents.getJLabel("成绩管理系统 - 登录页", titleFont);
     private JLabel text_account = DefaultComponents.getJLabel("帐号/学号：");
     private JLabel text_pass = DefaultComponents.getJLabel("密码：");
@@ -24,14 +28,16 @@ public class LoginFrame extends BaseFrame {
     private JLabel text_student = DefaultComponents.getJLabel("学生");
     private JLabel text_teacher = DefaultComponents.getJLabel("教师");
     private JLabel text_admin = DefaultComponents.getJLabel("管理员");
+
     private JTextField input_account = new JTextField(12);
     private JTextField input_pass = new JTextField(10);
+
     private JButton login = new JButton("登录");
     private ButtonGroup group_user = new ButtonGroup();
     private JRadioButton radio_student = new JRadioButton("学生");
     private JRadioButton radio_teacher = new JRadioButton("教师");
     private JRadioButton radio_admin = new JRadioButton("管理员");
-    private Const.AccountType type = Const.AccountType.student; // 用户类型
+
     static Font titleFont = new Font(Theme.Font_.NORMAL.getName(), Theme.Font_.NORMAL.getStyle(), Theme.Font_.NORMAL.getSize() + 12); // 标题的字体
     static Font loginButtonFont = new Font(Theme.Font_.NORMAL.getName(), Font.BOLD, Theme.Font_.NORMAL.getSize() + 4); // 登录按钮的字体
 
@@ -53,6 +59,7 @@ public class LoginFrame extends BaseFrame {
         this.setVisible(true);
         input_account.setText("1");
         input_pass.setText("20211224");
+        radio_teacher.doClick();
     }
 
     private void initView() {
@@ -150,21 +157,9 @@ public class LoginFrame extends BaseFrame {
             @Override
             public void mouseReleased(MouseEvent e) {
                 login.setBackground(new Color(0x9EB1E1));
-//                EventQueue.invokeLater(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        setVisible(false);
-//                        new StudentMainFrame();
-//                    }
-//                });
                 if (!isExistNoneInput()) {
                     if (MysqlConnect.reconnectSQL()) {
-                        if (login()) {
-                            EventQueue.invokeLater(() -> {
-                                setVisible(false);
-                                new StudentMainFrame(input_account.getText());
-                            });
-                        }
+                        login();
                     } else {
                         // 连接失败
                         JOptionPane.showMessageDialog(null, "连接数据库失败！请检查网络或联系管理员。",
@@ -209,19 +204,29 @@ public class LoginFrame extends BaseFrame {
         return false;
     }
 
-    public boolean login() {
-        LoginDao dao = new LoginDao();
+    public void login() {
         try {
-            boolean result = dao.login(type, input_account.getText(),input_pass.getText());
+            boolean result = loginDao.login(type, input_account.getText(), input_pass.getText());
             if (!result) {
                 JOptionPane.showMessageDialog(null, "登录失败，密码错误，请检查帐号或密码！",
                         "提示", JOptionPane.ERROR_MESSAGE);
+            } else {
+                EventQueue.invokeLater(() -> {
+                    dispose();
+                    // 跳转对应用户类型的面板
+                    switch (type) {
+                        case teacher:
+                            new TeacherMainFrame(input_account.getText());
+                            break;
+                        case admin:
+                        default:
+                            new StudentMainFrame(input_account.getText());
+                    }
+                });
             }
-            return result;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "登录失败！" + ex.getMessage(),
                     "提示", JOptionPane.ERROR_MESSAGE);
-            return false;
         }
     }
 }
