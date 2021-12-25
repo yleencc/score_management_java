@@ -53,10 +53,7 @@ public class StudentDao implements StudentDaoInter {
 
     @Override
     public int updateStudentInfo(Student student) throws SQLException {
-        String str =
-                "UPDATE student " +
-                        "SET Sname=?,Sex=?,Birthday=?,School=?,Major=?,Class=?  " +
-                        "WHERE Sno=?";
+        String str = "UPDATE student SET Sname=?,Sex=?,Birthday=?,School=?,Major=?,Class=? WHERE Sno=?";
         PreparedStatement ppst = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
         ppst.setString(1, student.getName());
         ppst.setString(2, student.getSex());

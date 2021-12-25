@@ -345,10 +345,12 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
                     showSaveSuccessful();
                     setDisableFormComponents();
                     button_save.setEnabled(false);
+                } else {
+                    showSaveFailed();
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null,
-                        "保存信息失败！",
+                        "保存信息失败！" + ex.getMessage(),
                         "提示", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == button_edit) {
@@ -418,7 +420,7 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        if (e.getSource() == select_course) {
+        if (e.getSource() == select_course && e.getStateChange() == ItemEvent.SELECTED) {
             filterGradesTable();
         }
     }

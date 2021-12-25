@@ -1,6 +1,6 @@
 package cc.yleen.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Teacher {
     private String tno;
@@ -8,13 +8,24 @@ public class Teacher {
     private String sex;
     private Date birthday;
     private String cno;
+    private String courseName;
 
-    public Teacher(String tno, String name, String sex, Date birthday, String cno) {
+    public Teacher(String tno, String name, String sex, Date birthday, String cno, String courseName) {
         this.tno = tno;
         this.name = name;
         this.sex = sex;
         this.birthday = birthday;
         this.cno = cno;
+        this.courseName = courseName;
+    }
+
+    public void setAll(String tno, String name, String sex, Date birthday, String cno, String courseName) {
+        this.tno = tno;
+        this.name = name;
+        this.sex = sex;
+        this.birthday = birthday;
+        this.cno = cno;
+        this.courseName = courseName;
     }
 
     public String getTno() {
@@ -55,6 +66,14 @@ public class Teacher {
 
     public void setCno(String cno) {
         this.cno = cno;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }
 
