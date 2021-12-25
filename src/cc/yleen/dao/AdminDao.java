@@ -38,6 +38,21 @@ public class AdminDao implements AdminDaoInter {
     }
 
     @Override
+    public int addCourse(Course course) throws SQLException {
+        return 0;
+    }
+
+    @Override
+    public int addTeacher(Course course) throws SQLException {
+        return 0;
+    }
+
+    @Override
+    public int addStudent(Course course) throws SQLException {
+        return 0;
+    }
+
+    @Override
     public int updateCourse(Course course) throws SQLException {
         String str = "UPDATE course SET Cno=?,Cname=?,Credit=? WHERE Cno=?";
         PreparedStatement ppst = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
@@ -46,5 +61,33 @@ public class AdminDao implements AdminDaoInter {
         ppst.setFloat(3, course.getCredit());
         ppst.setString(4, course.getCno());
         return ppst.executeUpdate();
+    }
+
+    @Override
+    public int updateTeacher(Course course) throws SQLException {
+        return 0;
+    }
+
+    @Override
+    public int updateStudent(Course course) throws SQLException {
+        return 0;
+    }
+
+    @Override
+    public int removeCourse(String cno) throws SQLException {
+        String str_rm = "DELETE FROM course WHERE cno=?";
+        PreparedStatement ppst = (PreparedStatement)  MysqlConnect.getInstance().prepareStatement(str_rm);
+        ppst.setString(1, cno);
+        return ppst.executeUpdate();
+    }
+
+    @Override
+    public int removeTeacher(String tno) throws SQLException {
+        return 0;
+    }
+
+    @Override
+    public int removeStudent(String sno) throws SQLException {
+        return 0;
     }
 }

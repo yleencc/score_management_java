@@ -51,13 +51,7 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
         this.setLayout(new GridBagLayout());
         itemRefresh.addActionListener(this);
         itemAdd.addActionListener(this);
-        itemDelete.addActionListener(evt -> {
-            int select = JOptionPane.showConfirmDialog(null,
-                    "你确定删除这个课程吗?",
-                    "警告 !", JOptionPane.YES_OPTION, JOptionPane.YES_OPTION, new ImageIcon(ImgUtil.getImage("cc/yleen/images/?.png")));
-            if (select == JOptionPane.YES_OPTION) {
-            }
-        });
+        itemDelete.addActionListener(this);
         menus.add(itemDelete);
         menus.add(itemAdd);
         menus.add(itemRefresh);
@@ -170,12 +164,34 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == itemRefresh ) {
+        if (e.getSource() == itemRefresh) {
             try {
                 requestCourse();
                 showRefreshSuccessful();
             } catch (SQLException ex) {
                 showRefreshFailed(ex);
+            }
+        } else if (e.getSource() == itemDelete) {
+            int select = JOptionPane.showConfirmDialog(null,
+                    "你确定删除这个课程吗?",
+                    "警告 !", JOptionPane.YES_OPTION, JOptionPane.YES_OPTION, new ImageIcon(ImgUtil.getImage("cc/yleen/images/?.png")));
+            if (select == JOptionPane.YES_OPTION) {
+                int row = table.getSelectedRow();
+                Vector line = (Vector) rowData.get(row); // 第row行数据
+                String cno = (String) line.get(0); // Cno
+                try {
+                    int result = adminDao.removeCourse(cno);
+                    if (result > 0) {
+                        rowData.remove(row);
+                        table.updateUI();
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "删除失败！",
+                                "提示", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException ex) {
+                    showRefreshFailed(ex);
+                }
             }
         }
     }
