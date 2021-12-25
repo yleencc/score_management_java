@@ -1,67 +1,67 @@
 package cc.yleen.model;
 
 public class Grade {
-    private long StudentID;
-    private String StudentName;
-    private long CourseID;
-    private String CourseName;
-    private String SemesterName;
-    private int Achievement;
+    private String sno;
+    private String studentName;
+    private String cno;
+    private String courseName;
+    private float grade;
+    private float credit;
 
-    public Grade(long studentID, String studentName, long courseID, String courseName, String semesterName, int achievement) {
-        StudentID = studentID;
-        StudentName = studentName;
-        CourseID = courseID;
-        CourseName = courseName;
-        SemesterName = semesterName;
-        Achievement = achievement;
+    public Grade(String sno, String studentName, String cno, String courseName, float grade, float credit) {
+        this.sno = sno;
+        this.studentName = studentName;
+        this.cno = cno;
+        this.courseName = courseName;
+        this.grade = grade;
+        this.credit = credit;
     }
 
-    public long getStudentID() {
-        return StudentID;
+    public String getSno() {
+        return sno;
     }
 
-    public void setStudentID(long studentID) {
-        StudentID = studentID;
+    public void setSno(String sno) {
+        this.sno = sno;
     }
 
     public String getStudentName() {
-        return StudentName;
+        return studentName;
     }
 
     public void setStudentName(String studentName) {
-        StudentName = studentName;
+        this.studentName = studentName;
     }
 
-    public long getCourseID() {
-        return CourseID;
+    public String getCno() {
+        return cno;
     }
 
-    public void setCourseID(long courseID) {
-        CourseID = courseID;
+    public void setCno(String cno) {
+        this.cno = cno;
     }
 
     public String getCourseName() {
-        return CourseName;
+        return courseName;
     }
 
     public void setCourseName(String courseName) {
-        CourseName = courseName;
+        this.courseName = courseName;
     }
 
-    public String getSemesterName() {
-        return SemesterName;
+    public float getGrade() {
+        return grade;
     }
 
-    public void setSemesterName(String semesterName) {
-        SemesterName = semesterName;
+    public void setGrade(float grade) {
+        this.grade = grade;
     }
 
-    public int getAchievement() {
-        return Achievement;
+    public float getCredit() {
+        return credit;
     }
 
-    public void setAchievement(int achievement) {
-        Achievement = achievement;
+    public void setCredit(float credit) {
+        this.credit = credit;
     }
 }

@@ -14,5 +14,5 @@ public interface StudentDaoInter {
     // 查看所有课程的成绩
     ArrayList<Grade> queryStudentAllGrade(String sno) throws SQLException;
     // 修改个人信息
-    void updateStudentInfo(String sno) throws SQLException;
+    int updateStudentInfo(Student student) throws SQLException;
 }

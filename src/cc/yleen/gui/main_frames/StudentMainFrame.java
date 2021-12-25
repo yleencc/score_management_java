@@ -1,10 +1,13 @@
 package cc.yleen.gui.main_frames;
 
+import cc.yleen.config.Theme;
 import cc.yleen.dao.StudentDao;
 import cc.yleen.gui.BaseFrame;
+import cc.yleen.gui.LoginFrame;
 import cc.yleen.gui.component.DefaultComponents;
 import cc.yleen.gui.component.GBC;
 import cc.yleen.gui.panel.BackgroundJPanel;
+import cc.yleen.model.Grade;
 import cc.yleen.model.Student;
 import cc.yleen.utils.DateUtil;
 import cc.yleen.utils.ImgUtil;
@@ -13,14 +16,17 @@ import cc.yleen.utils.ScreenSizeUtil;
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Vector;
 
 public class StudentMainFrame extends BaseFrame implements MenuListener, ActionListener, MouseListener {
     private JPanel panel_student_info = new JPanel();
-    private JPanel panel_grade = new JPanel();
+    private JScrollPane panel_grade = new JScrollPane();
     private JPanel panel_tools = new JPanel();
 
     private String[] menus_str;
@@ -28,12 +34,14 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
     private JPopupMenu popMenu;
     private JMenuItem delItem;
     private JMenuItem editItem;
-    private HashMap<String, JButton> buttons = new HashMap<String, JButton>();
 
     private JButton button_edit = new JButton("编辑");
     private JButton button_save = new JButton("保存修改");
     private JButton button_filter = new JButton("筛选");
+    private JButton button_refresh_student = new JButton("刷新个人信息");
+    private JButton button_refresh_table = new JButton("刷新表格");
 
+    private JLabel text_title = DefaultComponents.getJLabel("");
     private JLabel text_sno = DefaultComponents.getJLabel("");
     private JTextField input_name = new JTextField();
     private JTextField input_school = new JTextField();
@@ -44,6 +52,16 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
 
     private String sno;
     private Student student;
+    StudentDao studentDao = new StudentDao();
+
+    private DefaultTableModel model;
+    private Vector columnName, rowData;
+    private JTable table = new JTable() {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }//表格不允许被编辑
+    };
 
     public StudentMainFrame(String sno) {
         this.sno = sno;
@@ -59,12 +77,14 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         // init
         initMenuBar();
         initLayout();
-        initToolPanel();
         initAction();
+        setDisableFormComponents();
+        text_title.setIcon(new ImageIcon(LoginFrame.class.getResource("/images/book.png")));
         // Visible
         this.setVisible(true);
         try {
-            initData();
+            requestStudentInfo();
+            requestGrade();
         } catch (SQLException e) {
             showRequestFailed(e);
         }
@@ -96,12 +116,7 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         }
         // setJMenuBar
         this.setJMenuBar(jb);
-        items[1][0].addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        items[1][0].addActionListener(e -> System.exit(0));
     }
 
     private void initLayout() {
@@ -111,58 +126,79 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         panel_student_info.setBackground(new Color(0xDAE2FF));
         panel_grade.setBackground(new Color(0xFFDCD8));
         panel_student_info.setLayout(new GridBagLayout());
-        panel_grade.setLayout(new GridBagLayout());
         panel_tools.setLayout(new GridBagLayout());
+        panel_tools.add(button_refresh_student);
+        panel_tools.add(button_refresh_table);
+        //设置列名
+        columnName = new Vector();
+        rowData = new Vector();
+        columnName.add("学号");
+        columnName.add("学生姓名");
+        columnName.add("课程ID");
+        columnName.add("课程名");
+        columnName.add("课程学分");
+        columnName.add("成绩");
+        // 添加表格
+        model = new DefaultTableModel();
+        model.setDataVector(rowData, columnName);
+        table.setModel(model);
+        panel_grade.setViewportView(table);
+        //
         bgPanel.add(panel_student_info, new GBC(0, 0, 1, 5)
                 .setFill(GBC.BOTH)
                 .setIpad(10, 10)
-                .setWeight(50, 100));
+                .setWeight(40, 100));
         bgPanel.add(panel_tools, new GBC(1, 0, 4, 1)
                 .setFill(GBC.BOTH)
-                .setIpad(0, 0)
-                .setWeight(100, 10));
+                .setIpad(0, 20)
+                .setWeight(120, 0));
         bgPanel.add(panel_grade, new GBC(1, 1, 4, 4)
                 .setFill(GBC.BOTH)
                 .setIpad(0, 0)
-                .setWeight(100, 100));
+                .setWeight(120, 100));
         //
-        panel_student_info.add(DefaultComponents.getJLabel("学号"), new GBC(1, 0, 1, 1)
+        panel_student_info.add(text_title, new GBC(1, 0, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("姓名"), new GBC(1, 1, 1, 1)
+        panel_student_info.add(DefaultComponents.getJLabel("学号：", Theme.Font_.NORMAL, Theme.Color_.PRIMARY), new GBC(2, 0, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("性别"), new GBC(1, 2, 1, 1)
+        panel_student_info.add(DefaultComponents.getJLabel("姓名："), new GBC(1, 1, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("学校"), new GBC(1, 3, 1, 1)
+        panel_student_info.add(DefaultComponents.getJLabel("性别："), new GBC(1, 2, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("专业"), new GBC(1, 4, 1, 1)
+        panel_student_info.add(DefaultComponents.getJLabel("学校："), new GBC(1, 3, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("班级"), new GBC(1, 5, 1, 1)
+        panel_student_info.add(DefaultComponents.getJLabel("专业："), new GBC(1, 4, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("生日"), new GBC(1, 6, 1, 1)
+        panel_student_info.add(DefaultComponents.getJLabel("班级："), new GBC(1, 5, 1, 1)
+                .setFill(GBC.HORIZONTAL)
+                .setIpad(0, 0)
+                .setInsets(0, 20, 0, 0)
+                .setWeight(20, 10));
+        panel_student_info.add(DefaultComponents.getJLabel("生日："), new GBC(1, 6, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
         //
-        panel_student_info.add(text_sno, new GBC(2, 0, 2, 1)
+        panel_student_info.add(text_sno, new GBC(3, 0, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(50, 10));
@@ -207,24 +243,7 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(2, 50));
-    }
-
-    /**
-     * init top tool panel
-     */
-    private void initToolPanel() {
-        JButton refresh = new JButton("刷新列表");
-        JButton add_class = new JButton("添加班级");
-        JButton add_student = new JButton("添加学生");
-        JButton remove_class = new JButton("删除班级");
-        buttons.put("refresh", refresh);
-        buttons.put("add_class", add_class);
-        buttons.put("add_student", add_student);
-        buttons.put("remove_class", remove_class);
-        panel_tools.add(refresh);
-        panel_tools.add(add_class);
-        panel_tools.add(add_student);
-        panel_tools.add(remove_class);
+        //
     }
 
     private void initAction() {
@@ -239,12 +258,13 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         button_save.addActionListener(this);
         button_edit.addActionListener(this);
         button_filter.addActionListener(this);
+        button_refresh_student.addActionListener(this);
+        button_refresh_table.addActionListener(this);
         button_save.setEnabled(false);
     }
 
-    public void initData() throws SQLException {
-        StudentDao dao = new StudentDao();
-        this.student = dao.getStudentInfo(this.sno);
+    private void requestStudentInfo() throws SQLException {
+        this.student = studentDao.getStudentInfo(this.sno);
         text_sno.setText(student.getSno());
         input_name.setText(student.getName());
         select_sex.setSelectedItem(student.getSex());
@@ -253,6 +273,40 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
         input_class.setText(student.getClassName());
         String day = DateUtil.DateToYYMMDD(student.getBirthday());
         input_birthday.setText(day);
+    }
+
+    private void requestGrade() throws SQLException {
+        rowData.clear();
+        ArrayList<Grade> result = studentDao.queryStudentAllGrade(this.sno);
+        for (Grade gradeDate : result) {
+            Vector line = new Vector();
+            line.add(gradeDate.getSno());
+            line.add(gradeDate.getStudentName());
+            line.add(gradeDate.getCno());
+            line.add(gradeDate.getCourseName());
+            line.add(gradeDate.getCredit());
+            line.add(gradeDate.getGrade());
+            rowData.add(line);
+        }
+        table.setModel(model);
+    }
+
+    private void setDisableFormComponents() {
+        select_sex.setEnabled(false);
+        input_name.setEnabled(false);
+        input_school.setEnabled(false);
+        input_major.setEnabled(false);
+        input_class.setEnabled(false);
+        input_birthday.setEnabled(false);
+    }
+
+    private void setEnableFormComponents() {
+        select_sex.setEnabled(true);
+        input_name.setEnabled(true);
+        input_school.setEnabled(true);
+        input_major.setEnabled(true);
+        input_class.setEnabled(true);
+        input_birthday.setEnabled(true);
     }
 
     @Override
@@ -272,34 +326,41 @@ public class StudentMainFrame extends BaseFrame implements MenuListener, ActionL
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // ok button
         if (e.getSource() == button_save) {
-//            try {
-//                StudentDao.modifyStudentInfo(connection, getStudent_fromEditText());
-////                updateLeftPanel();
-//                super.showSuccessful();
-//            } catch (SQLException okError) {
-//                okError.printStackTrace();
-//                JOptionPane.showMessageDialog(null,
-//                        "更新学生信息失败",
-//                        "Update Error", JOptionPane.ERROR_MESSAGE);
-//            }
+            try {
+                student.setAll(sno, input_name.getText(), (String) select_sex.getSelectedItem(), student.getBirthday(),
+                        input_school.getText(), input_major.getText(), input_class.getText());
+                int result = studentDao.updateStudentInfo(student);
+                if (result > 0) {
+                    showSaveSuccessful();
+                    setDisableFormComponents();
+                    button_save.setEnabled(false);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null,
+                        "保存信息失败！",
+                        "提示", JOptionPane.ERROR_MESSAGE);
+            }
         } else if (e.getSource() == button_edit) {
+            setEnableFormComponents();
             button_save.setEnabled(true);
         } else if (e.getSource() == button_filter) {
+        } else if (e.getSource() == button_refresh_table) {
+            try {
+                requestGrade();
+                showRefreshSuccessful();
+            } catch (SQLException e1) {
+                showRequestFailed(e1);
+            }
+        } else if (e.getSource() == button_refresh_student) {
+            try {
+                requestStudentInfo();
+                showRefreshSuccessful();
+            } catch (SQLException e2) {
+                showRequestFailed(e2);
+            }
         }
     }
-
-//    private Student getStudent_fromEditText() {
-//        long id = Long.parseLong(edits_hmap.get("id").getText());
-//        String name = edits_hmap.get("name").getText();
-//        String className = class_select.getSelectedItem().toString();
-//        String sex = sex_select.getSelectedItem().toString();
-//        long phone = Long.parseLong(edits_hmap.get("phone").getText());
-//        String addr = edits_hmap.get("addr").getText();
-//        String remarks_str = remarks.getText();
-//        return new Student(id, name, className, sex, phone, addr, remarks_str);
-//    }
 
     @Override
     public void mouseClicked(MouseEvent e) {

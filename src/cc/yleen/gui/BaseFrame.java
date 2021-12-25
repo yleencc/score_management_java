@@ -13,10 +13,24 @@ public class BaseFrame extends JFrame {
     public BaseFrame() {
     }
 
-    protected void showSuccessful() {
+    protected void showOperateSuccessful() {
         JOptionPane.showMessageDialog(null,
 //                "操作成功，如果没有变化请尝试刷新。",
-                "操作成功.",
+                "操作成功",
+                "Succeed", JOptionPane.DEFAULT_OPTION,
+                new ImageIcon(ImgUtil.getImage("cc/yleen/images/ok.png")));
+    }
+    protected void showSaveSuccessful() {
+        JOptionPane.showMessageDialog(null,
+//                "操作成功，如果没有变化请尝试刷新。",
+                "保存成功",
+                "Succeed", JOptionPane.DEFAULT_OPTION,
+                new ImageIcon(ImgUtil.getImage("cc/yleen/images/ok.png")));
+    }
+
+    protected void showRefreshSuccessful() {
+        JOptionPane.showMessageDialog(null,
+                "刷新成功",
                 "Succeed", JOptionPane.DEFAULT_OPTION,
                 new ImageIcon(ImgUtil.getImage("cc/yleen/images/ok.png")));
     }
