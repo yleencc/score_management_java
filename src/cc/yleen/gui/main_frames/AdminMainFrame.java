@@ -23,7 +23,7 @@ public class AdminMainFrame extends BaseFrame implements ActionListener {
     private JPanel panel_teacher;
     private JPanel panel_student;
     private JTabbedPane tabbedPane = new JTabbedPane(); // 选项卡
-    public JLabel tip = DefaultComponents.getJLabel("（操作的执行会在这里获得反馈）", Theme.Font_.SMALL);
+    public JLabel tip = DefaultComponents.getJLabel("（提示：操作的执行会在这里获得反馈；在表格里右键可以调出操作菜单，双击表格可以进行编辑）", Theme.Font_.SMALL);
     private String[] menus_str;
     private String[][] items2_str;
 
