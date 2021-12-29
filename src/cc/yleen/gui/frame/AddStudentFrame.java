@@ -22,7 +22,8 @@ public class AddStudentFrame extends BaseFrame {
     private JLabel text_class = new JLabel("班级");
     private JTextField input_sno = new JTextField();
     private JTextField input_sname = new JTextField();
-    private JTextField input_sex = new JTextField();
+    //    private JTextField input_sex = new JTextField();
+    private JComboBox<String> input_sex = new JComboBox<String>();
     private JTextField input_birthday = new JTextField();
     private JTextField input_school = new JTextField();
     private JTextField input_major = new JTextField();
@@ -48,7 +49,8 @@ public class AddStudentFrame extends BaseFrame {
     }
 
     private void initView() {
-
+        input_sex.addItem("男");
+        input_sex.addItem("女");
     }
 
     private void initLayout() {
@@ -123,7 +125,7 @@ public class AddStudentFrame extends BaseFrame {
         ok.addActionListener(e -> {
             String sno = input_sno.getText();
             String sName = input_sname.getText();
-            String sex = input_sex.getText();
+            String sex = input_sex.getSelectedItem().toString();
             java.sql.Date birthday;
             String school = input_school.getText();
             String major = input_major.getText();
@@ -145,7 +147,7 @@ public class AddStudentFrame extends BaseFrame {
                 if (result > 0) {
                     dispose();
                     panel_student.addStudentToTable(student);
-                    panel_student.tip.setText("添加学号为" + sno + "的学生成功" );
+                    panel_student.tip.setText("添加学号为" + sno + "的学生成功");
                 } else {
                     JOptionPane.showMessageDialog(null,
                             "添加失败！",

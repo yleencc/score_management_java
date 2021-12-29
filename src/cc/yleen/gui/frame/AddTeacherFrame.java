@@ -20,7 +20,8 @@ public class AddTeacherFrame extends BaseFrame {
     private JLabel text_cno = new JLabel("负责的课程号");
     private JTextField input_tno = new JTextField();
     private JTextField input_tname = new JTextField();
-    private JTextField input_sex = new JTextField();
+//    private JTextField input_sex = new JTextField();
+    private JComboBox<String> input_sex = new JComboBox<String>();
     private JTextField input_birthday = new JTextField();
     private JTextField input_cno = new JTextField();
     private JButton ok = new JButton("确定");
@@ -44,7 +45,8 @@ public class AddTeacherFrame extends BaseFrame {
     }
 
     private void initView() {
-
+        input_sex.addItem("男");
+        input_sex.addItem("女");
     }
 
     private void initLayout() {
@@ -103,7 +105,7 @@ public class AddTeacherFrame extends BaseFrame {
         ok.addActionListener(e -> {
             String tno = input_tno.getText();
             String tName = input_tname.getText();
-            String sex = input_sex.getText();
+            String sex = input_sex.getSelectedItem().toString();
             java.sql.Date birthday;
             String cno = input_cno.getText();
             try {
