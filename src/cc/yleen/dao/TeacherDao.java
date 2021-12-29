@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class TeacherDao implements TeacherDaoInter {
     @Override
     public Teacher getTeacherInfo(String tno) throws SQLException {
-        String str = ("SELECT teacher.*, course.Cname FROM teacher, course WHERE Tno=? AND course.Cno = teacher.Cno");
+        String str = ("SELECT teacher.*, course.Cname FROM teacher, course WHERE Tno=? AND course.Cno = teacher.Cno order by Tno");
         PreparedStatement statement = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
         statement.setString(1, tno);
         ResultSet result = statement.executeQuery();
@@ -33,7 +33,7 @@ public class TeacherDao implements TeacherDaoInter {
 
     @Override
     public ArrayList<Grade> queryCourseAllGrade(String cno) throws SQLException {
-        String str = ("SELECT * FROM student, course, sc WHERE student.Sno = sc.Sno AND course.Cno = ? AND sc.Cno = ?");
+        String str = ("SELECT * FROM student, course, sc WHERE student.Sno = sc.Sno AND course.Cno = ? AND sc.Cno = ? order by student.Sno");
         PreparedStatement pstmt = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
         pstmt.setString(1, cno);
         pstmt.setString(2, cno);

@@ -34,7 +34,7 @@ public class StudentDao implements StudentDaoInter {
 
     @Override
     public ArrayList<Grade> queryStudentAllGrade(String sno) throws SQLException {
-        String str = ("SELECT * FROM student, course, sc WHERE student.Sno = ? AND sc.Sno = ? AND course.Cno = sc.Cno");
+        String str = ("SELECT * FROM student, course, sc WHERE student.Sno = ? AND sc.Sno = ? AND course.Cno = sc.Cno order by course.Cno");
         PreparedStatement pstmt = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
         pstmt.setString(1, sno);
         pstmt.setString(2, sno);

@@ -15,7 +15,7 @@ import java.sql.Date;
 public class AdminDao implements AdminDaoInter {
     @Override
     public ArrayList<Student> getAllStudents() throws SQLException {
-        String str = ("SELECT * FROM student");
+        String str = ("SELECT * FROM student order by Sno");
         PreparedStatement pstmt = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
         ResultSet result = pstmt.executeQuery();
         ArrayList<Student> students = new ArrayList<>();
@@ -34,7 +34,7 @@ public class AdminDao implements AdminDaoInter {
 
     @Override
     public ArrayList<Teacher> getAllTeachers() throws SQLException {
-        String str = ("SELECT teacher.*, course.Cname FROM teacher, course where teacher.Cno = course.Cno");
+        String str = ("SELECT teacher.*, course.Cname FROM teacher, course where teacher.Cno = course.Cno order by Tno");
         PreparedStatement pstmt = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
         ResultSet result = pstmt.executeQuery();
         ArrayList<Teacher> teachers = new ArrayList<>();
@@ -52,7 +52,7 @@ public class AdminDao implements AdminDaoInter {
 
     @Override
     public ArrayList<Course> queryAllCourse() throws SQLException {
-        String str = ("SELECT * FROM course");
+        String str = ("SELECT * FROM course order by Cno");
         PreparedStatement pstmt = (PreparedStatement) MysqlConnect.getInstance().prepareStatement(str);
         ResultSet result = pstmt.executeQuery();
         ArrayList<Course> courses = new ArrayList<>();

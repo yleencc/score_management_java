@@ -89,11 +89,11 @@ public class AddTeacherFrame extends BaseFrame {
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(110, 0)
                 .setWeight(0, 30));
-        this.add(ok, new GBC(0, 5, 1, 1)
+        this.add(ok, new GBC(1, 5, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(0, 30));
-        this.add(cancel, new GBC(1, 5, 1, 1)
+        this.add(cancel, new GBC(0, 5, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(0, 30));
