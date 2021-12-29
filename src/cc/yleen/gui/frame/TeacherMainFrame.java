@@ -61,8 +61,8 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
     public TeacherMainFrame(String tno) {
         this.tno = tno;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        width = (int) (ScreenSizeUtil.getWidth() / 1.7);
-        height = (int) (ScreenSizeUtil.getHeight() / 1.7);
+        width = (int) (ScreenSizeUtil.getWidth() / 1.5);
+        height = (int) (ScreenSizeUtil.getHeight() / 1.5);
         this.setBounds((ScreenSizeUtil.getWidth() - width) / 2, (ScreenSizeUtil.getHeight() - height) / 2, width, height);
         this.setTitle("成绩管理系统 - 教师端");
         this.setIconImage(ImgUtil.getImage("./images/book.png"));

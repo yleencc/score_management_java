@@ -31,8 +31,8 @@ public class AdminMainFrame extends BaseFrame implements ActionListener {
     public AdminMainFrame(String adminName) {
         this.adminName = adminName;
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        width = (int) (ScreenSizeUtil.getWidth() / 1.7);
-        height = (int) (ScreenSizeUtil.getHeight() / 1.7);
+        width = (int) (ScreenSizeUtil.getWidth() / 1.5);
+        height = (int) (ScreenSizeUtil.getHeight() / 1.5);
         this.setBounds((ScreenSizeUtil.getWidth() - width) / 2, (ScreenSizeUtil.getHeight() - height) / 2, width, height);
         this.setTitle("成绩管理系统 - 当前管理员帐号：" + this.adminName);
         this.setIconImage(ImgUtil.getImage("./images/book.png"));
