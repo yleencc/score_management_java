@@ -20,6 +20,7 @@ import java.util.Vector;
 
 public class CoursePanel extends BasePanel implements MouseListener, ActionListener {
     public AdminDao adminDao;
+    public JLabel tip;
     ArrayList<Course> courses = new ArrayList<Course>();
 
     private JScrollPane panel_table = new JScrollPane();
@@ -37,8 +38,9 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
     JMenuItem itemAdd = new JMenuItem("添加 ");
     JMenuItem itemRefresh = new JMenuItem("刷新 ");
 
-    public CoursePanel(AdminDao adminDao) {
+    public CoursePanel(AdminDao adminDao, JLabel tip) {
         this.adminDao = adminDao;
+        this.tip = tip;
         initView();
         initAction();
         try {
@@ -97,13 +99,16 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
                 if (result > 0) {
                     // 执行成功
                     System.out.println("已修改");
+                    tip.setText("成功更新课程ID为" + cno + "的信息");
                 } else {
                     showSaveFailed();
+                    tip.setText("更新课程ID为" + cno + "的信息失败！");
                 }
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null,
                         "保存信息失败！" + ex.getMessage(),
                         "提示", JOptionPane.ERROR_MESSAGE);
+                tip.setText("更新课程ID为" + cno + "的信息失败！");
             }
         });
     }
@@ -196,10 +201,12 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
                     if (result > 0) {
                         rowData.remove(row);
                         table.updateUI();
+                        tip.setText("删除课程ID为" + cno + "成功");
                     } else {
                         JOptionPane.showMessageDialog(null,
                                 "删除失败！",
                                 "提示", JOptionPane.ERROR_MESSAGE);
+                        tip.setText("删除课程ID为" + cno + "失败！");
                     }
                 } catch (SQLException ex) {
                     showRefreshFailed(ex);

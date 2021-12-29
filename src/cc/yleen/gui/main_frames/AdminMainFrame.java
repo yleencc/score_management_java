@@ -4,6 +4,7 @@ import cc.yleen.config.Theme;
 import cc.yleen.dao.AdminDao;
 import cc.yleen.gui.BaseFrame;
 import cc.yleen.gui.LoginFrame;
+import cc.yleen.gui.component.DefaultComponents;
 import cc.yleen.gui.component.GBC;
 import cc.yleen.gui.panel.BackgroundJPanel;
 import cc.yleen.gui.panel.CoursePanel;
@@ -20,7 +21,7 @@ public class AdminMainFrame extends BaseFrame implements ActionListener {
     private JPanel panel_teacher = new JPanel();
     private JPanel panel_student = new JPanel();
     private JTabbedPane tabbedPane = new JTabbedPane(); // 选项卡
-
+    public JLabel tip = DefaultComponents.getJLabel("（操作的执行会在这里获得反馈）", Theme.Font_.SMALL);
     private String[] menus_str;
     private String[][] items2_str;
 
@@ -79,14 +80,19 @@ public class AdminMainFrame extends BaseFrame implements ActionListener {
     }
 
     private void initLayout() {
-        panel_course = new CoursePanel(adminDao);
+        panel_course = new CoursePanel(adminDao, tip);
         bgPanel.setLayout(new GridBagLayout());
         // 设置选项卡标签的布局方式
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
         bgPanel.add(tabbedPane, new GBC(0, 0, 1, 1)
                 .setFill(GBC.BOTH)
                 .setIpad(0, 0)
-                .setWeight(100, 30));
+                .setWeight(100, 100));
+        bgPanel.add(tip, new GBC(0, 1, 1, 1)
+                .setFill(GBC.HORIZONTAL)
+                .setIpad(20, 0)
+                .setInsets(0, 10, 4, 0)
+                .setWeight(100, 0));
         URL resource = AdminMainFrame.class.getResource("/images/book.png");
         ImageIcon imageIcon = new ImageIcon(resource);
         JLabel tabLabelA = new JLabel();

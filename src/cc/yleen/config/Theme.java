@@ -8,7 +8,7 @@ import java.awt.*;
 public class Theme {
     public static class Font_ {
         public static final Font NORMAL = new Font("Microsoft Yahei UI",Font.PLAIN,16);
-        public static final Font SMALL = new Font("Microsoft Yahei UI",Font.PLAIN,12);
+        public static final Font SMALL = new Font("Microsoft Yahei UI",Font.PLAIN,14);
         public static final Font BIG_TITLE = new Font("Microsoft Sans Serif",Font.PLAIN,30);
     }
     public static class Color_ {
