@@ -41,6 +41,10 @@ public class LoginFrame extends BaseFrame {
 
     static Font titleFont = new Font(Theme.Font_.NORMAL.getName(), Theme.Font_.NORMAL.getStyle(), Theme.Font_.NORMAL.getSize() + 12); // 标题的字体
     static Font loginButtonFont = new Font(Theme.Font_.NORMAL.getName(), Font.BOLD, Theme.Font_.NORMAL.getSize() + 4); // 登录按钮的字体
+    private Color colorForeground = new Color(0xF5DCDCDC, true);
+    private Color colorbackground = new Color(0x48969B);
+    private Color colorForegroundHover = new Color(0xF5EBEBEB, true);
+    private Color colorbackgroundHover = new Color(0x448287);
 
     public LoginFrame() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -71,8 +75,8 @@ public class LoginFrame extends BaseFrame {
         login.setBorderPainted(true);
         login.setBorder(null);
         login.setOpaque(true);
-        login.setForeground(new Color(0xA6EFFF));
-        login.setBackground(new Color(0x8997c7));
+        login.setForeground(colorForeground);
+        login.setBackground(colorbackground);
         login.setFont(loginButtonFont);
         // SQL group
         group_user.add(radio_student);
@@ -152,13 +156,13 @@ public class LoginFrame extends BaseFrame {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                login.setBackground(new Color(0x7582AF));
-                login.setForeground(new Color(0x168788));
+                login.setBackground(colorbackgroundHover);
+                login.setForeground(colorForegroundHover);
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                login.setBackground(new Color(0x9EB1E1));
+                login.setBackground(colorbackground);
                 if (!isExistNoneInput()) {
                     if (MysqlConnect.reconnectSQL()) {
                         login();
@@ -172,14 +176,13 @@ public class LoginFrame extends BaseFrame {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                login.setForeground(new Color(0x168788));
-                login.setBackground(new Color(0x9EB1E1));
+                login.setForeground(new Color(0xFFFFFF));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                login.setForeground(new Color(0xA6EFFF));
-                login.setBackground(new Color(0x8997c7));
+                login.setForeground(colorForeground);
+                login.setBackground(colorbackground);
             }
         });
     }

@@ -124,8 +124,8 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         select_sex.addItem("男");
         select_sex.addItem("女");
         bgPanel.setLayout(new GridBagLayout());
-        panel_student_info.setBackground(new Color(0xDAE2FF));
-        panel_grade.setBackground(new Color(0xFFDCD8));
+        panel_student_info.setBackground(new Color(0xA6B9CD));
+        panel_grade.setBackground(new Color(0xA6B9CD));
         panel_student_info.setLayout(new GridBagLayout());
         panel_tools.setLayout(new GridBagLayout());
         JLabel label = new JLabel("筛选课程：");

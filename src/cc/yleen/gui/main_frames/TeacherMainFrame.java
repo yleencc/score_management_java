@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemListener {
-    private JPanel panel_student_info = new JPanel();
+    private JPanel panel_teacher_info = new JPanel();
     private JScrollPane panel_grade = new JScrollPane();
     private JPanel panel_tools = new JPanel();
 
@@ -34,7 +34,7 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
 
     private JButton button_edit = new JButton("编辑");
     private JButton button_save = new JButton("保存修改");
-    private JButton button_refresh_student = new JButton("刷新个人信息");
+    private JButton button_refresh_teacher = new JButton("刷新个人信息");
     private JButton button_refresh_table = new JButton("刷新表格");
 
     private JLabel text_title = DefaultComponents.getJLabel("");
@@ -128,11 +128,11 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
         select_student.addItem("及格的学生");
         select_student.addItem("不及格的学生");
         bgPanel.setLayout(new GridBagLayout());
-        panel_student_info.setBackground(new Color(0xDAE2FF));
-        panel_grade.setBackground(new Color(0xFFDCD8));
-        panel_student_info.setLayout(new GridBagLayout());
+        panel_teacher_info.setBackground(new Color(0xA6B9CD));
+        panel_grade.setBackground(new Color(0xA6B9CD));
+        panel_teacher_info.setLayout(new GridBagLayout());
         panel_tools.setLayout(new GridBagLayout());
-        panel_tools.add(button_refresh_student);
+        panel_tools.add(button_refresh_teacher);
         JLabel label = new JLabel("（仅显示本人负责的学生）筛选学生：");
         label.setHorizontalAlignment(SwingConstants.RIGHT);
 
@@ -181,7 +181,7 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
         table.setModel(model);
         panel_grade.setViewportView(table);
         //
-        bgPanel.add(panel_student_info, new GBC(0, 0, 1, 5)
+        bgPanel.add(panel_teacher_info, new GBC(0, 0, 1, 5)
                 .setFill(GBC.BOTH)
                 .setIpad(10, 10)
                 .setWeight(40, 100));
@@ -194,79 +194,79 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
                 .setIpad(0, 0)
                 .setWeight(120, 100));
         //
-        panel_student_info.add(text_title, new GBC(1, 0, 1, 1)
+        panel_teacher_info.add(text_title, new GBC(1, 0, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 10, 0, 0)
                 .setWeight(0, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("教师号：", Theme.Font_.NORMAL, Theme.Color_.PRIMARY), new GBC(2, 0, 1, 1)
+        panel_teacher_info.add(DefaultComponents.getJLabel("教师号：", Theme.Font_.NORMAL, Theme.Color_.PRIMARY), new GBC(2, 0, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 0, 0, 0)
                 .setWeight(10, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("姓名："), new GBC(1, 1, 1, 1)
+        panel_teacher_info.add(DefaultComponents.getJLabel("姓名："), new GBC(1, 1, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("性别："), new GBC(1, 2, 1, 1)
+        panel_teacher_info.add(DefaultComponents.getJLabel("性别："), new GBC(1, 2, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("生日："), new GBC(1, 3, 1, 1)
+        panel_teacher_info.add(DefaultComponents.getJLabel("生日："), new GBC(1, 3, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
-        panel_student_info.add(DefaultComponents.getJLabel("负责课程："), new GBC(1, 4, 1, 1)
+        panel_teacher_info.add(DefaultComponents.getJLabel("负责课程："), new GBC(1, 4, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
         //
-        panel_student_info.add(text_tno, new GBC(3, 0, 3, 1)
+        panel_teacher_info.add(text_tno, new GBC(3, 0, 3, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(50, 10));
-        panel_student_info.add(input_name, new GBC(2, 1, 2, 1)
+        panel_teacher_info.add(input_name, new GBC(2, 1, 2, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(50, 10));
-        panel_student_info.add(select_sex, new GBC(2, 2, 2, 1)
+        panel_teacher_info.add(select_sex, new GBC(2, 2, 2, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 10)
                 .setWeight(50, 10));
-        panel_student_info.add(input_birthday, new GBC(2, 3, 2, 1)
+        panel_teacher_info.add(input_birthday, new GBC(2, 3, 2, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(50, 10));
-        panel_student_info.add(text_course, new GBC(2, 4, 1, 1)
+        panel_teacher_info.add(text_course, new GBC(2, 4, 1, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 0)
                 .setWeight(20, 10));
         //
-        panel_student_info.add(button_refresh_student, new GBC(1, 9, 5, 1)
+        panel_teacher_info.add(button_refresh_teacher, new GBC(1, 9, 5, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 20)
                 .setWeight(20, 10));
-        panel_student_info.add(button_edit, new GBC(1, 10, 5, 1)
+        panel_teacher_info.add(button_edit, new GBC(1, 10, 5, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 20)
                 .setWeight(20, 10));
-        panel_student_info.add(button_save, new GBC(1, 11, 5, 1)
+        panel_teacher_info.add(button_save, new GBC(1, 11, 5, 1)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setInsets(0, 20, 0, 20)
                 .setWeight(20, 10));
-        panel_student_info.add(new JLabel(" "), new GBC(0, 0, 1, 11)
+        panel_teacher_info.add(new JLabel(" "), new GBC(0, 0, 1, 11)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(2, 50));
-        panel_student_info.add(new JLabel(" "), new GBC(5, 0, 1, 11)
+        panel_teacher_info.add(new JLabel(" "), new GBC(5, 0, 1, 11)
                 .setFill(GBC.HORIZONTAL)
                 .setIpad(0, 0)
                 .setWeight(2, 50));
@@ -284,7 +284,7 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
         popMenu.add(editItem);
         button_save.addActionListener(this);
         button_edit.addActionListener(this);
-        button_refresh_student.addActionListener(this);
+        button_refresh_teacher.addActionListener(this);
         button_refresh_table.addActionListener(this);
         button_save.setEnabled(false);
         select_student.addItemListener(this);
@@ -385,7 +385,7 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
             } catch (SQLException e1) {
                 showRequestFailed(e1);
             }
-        } else if (e.getSource() == button_refresh_student) {
+        } else if (e.getSource() == button_refresh_teacher) {
             try {
                 requestTeacherInfo();
                 showRefreshSuccessful();
