@@ -94,8 +94,7 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         JMenuItem[][] items;
         menus_str = new String[]{"菜单"};
         items2_str = new String[][]{
-                {"切换用户"},
-                {"退出"}
+                {"切换用户", "退出"}
         };
         // First level Menus
         menus = new JMenu[menus_str.length];
