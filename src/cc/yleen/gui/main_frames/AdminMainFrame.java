@@ -8,6 +8,8 @@ import cc.yleen.gui.component.DefaultComponents;
 import cc.yleen.gui.component.GBC;
 import cc.yleen.gui.panel.BackgroundJPanel;
 import cc.yleen.gui.panel.CoursePanel;
+import cc.yleen.gui.panel.StudentPanel;
+import cc.yleen.gui.panel.TeacherPanel;
 import cc.yleen.utils.ImgUtil;
 import cc.yleen.utils.ScreenSizeUtil;
 
@@ -18,8 +20,8 @@ import java.net.URL;
 
 public class AdminMainFrame extends BaseFrame implements ActionListener {
     private JPanel panel_course;
-    private JPanel panel_teacher = new JPanel();
-    private JPanel panel_student = new JPanel();
+    private JPanel panel_teacher;
+    private JPanel panel_student;
     private JTabbedPane tabbedPane = new JTabbedPane(); // 选项卡
     public JLabel tip = DefaultComponents.getJLabel("（操作的执行会在这里获得反馈）", Theme.Font_.SMALL);
     private String[] menus_str;
@@ -33,7 +35,7 @@ public class AdminMainFrame extends BaseFrame implements ActionListener {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         width = (int) (ScreenSizeUtil.getWidth() / 1.7);
         height = (int) (ScreenSizeUtil.getHeight() / 1.7);
-        this.setBounds(width, height, width, height);
+        this.setBounds((ScreenSizeUtil.getWidth() - width) / 2, (ScreenSizeUtil.getHeight() - height) / 2, width, height);
         this.setTitle("成绩管理系统 - 当前管理员帐号：" + this.adminName);
         this.setIconImage(ImgUtil.getImage("cc/yleen/images/book.png"));
         this.setMinimumSize(new Dimension((int) (width / 1.5), (int) (height / 1.5)));
@@ -81,6 +83,8 @@ public class AdminMainFrame extends BaseFrame implements ActionListener {
 
     private void initLayout() {
         panel_course = new CoursePanel(adminDao, tip);
+        panel_teacher = new TeacherPanel(adminDao, tip);
+        panel_student = new StudentPanel(adminDao, tip);
         bgPanel.setLayout(new GridBagLayout());
         // 设置选项卡标签的布局方式
         tabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);

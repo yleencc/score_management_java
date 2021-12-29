@@ -66,7 +66,7 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         width = (int) (ScreenSizeUtil.getWidth() / 1.7);
         height = (int) (ScreenSizeUtil.getHeight() / 1.7);
-        this.setBounds(width, height, width, height);
+        this.setBounds((ScreenSizeUtil.getWidth() - width) / 2, (ScreenSizeUtil.getHeight() - height) / 2, width, height);
         this.setTitle("成绩管理系统 - 学生端");
         this.setIconImage(ImgUtil.getImage("cc/yleen/images/book.png"));
         this.setMinimumSize(new Dimension((int) (width / 1.5), (int) (height / 1.5)));

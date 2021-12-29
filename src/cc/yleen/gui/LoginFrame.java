@@ -46,7 +46,8 @@ public class LoginFrame extends BaseFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         width = (int) (ScreenSizeUtil.getHeight() / 2);
         height = (int) (ScreenSizeUtil.getHeight() / 1.8);
-        this.setBounds(width, height, width, height);
+//        this.setBounds(width, height, width, height);
+        this.setBounds((ScreenSizeUtil.getWidth() - width) / 2, (ScreenSizeUtil.getHeight() - height) / 2, width, height);
         this.setMinimumSize(new Dimension(width, height));
         this.setTitle("成绩管理系统");
         this.setIconImage(ImgUtil.getImage("./images/book.png"));
@@ -58,9 +59,9 @@ public class LoginFrame extends BaseFrame {
         radio_student.doClick();
         this.add(bgPanel);
         this.setVisible(true);
-        input_account.setText("admin");
-        input_pass.setText("admin");
-        radio_admin.doClick();
+//        input_account.setText("admin");
+//        input_pass.setText("admin");
+//        radio_admin.doClick();
     }
 
     private void initView() {
