@@ -17,13 +17,13 @@ public class BaseFrame extends JFrame {
         JOptionPane.showMessageDialog(null,
                 "操作成功",
                 "提示", JOptionPane.DEFAULT_OPTION,
-                new ImageIcon(ImgUtil.getImage("cc/yleen/images/ok.png")));
+                new ImageIcon(ImgUtil.getImage("./images/ok.png")));
     }
     protected void showSaveSuccessful() {
         JOptionPane.showMessageDialog(null,
                 "保存成功",
                 "提示", JOptionPane.DEFAULT_OPTION,
-                new ImageIcon(ImgUtil.getImage("cc/yleen/images/ok.png")));
+                new ImageIcon(ImgUtil.getImage("./images/ok.png")));
     }
     protected void showSaveFailed() {
         JOptionPane.showMessageDialog(null,
@@ -35,7 +35,7 @@ public class BaseFrame extends JFrame {
         JOptionPane.showMessageDialog(null,
                 "刷新成功",
                 "提示", JOptionPane.DEFAULT_OPTION,
-                new ImageIcon(ImgUtil.getImage("cc/yleen/images/ok.png")));
+                new ImageIcon(ImgUtil.getImage("./images/ok.png")));
     }
 
     protected void showRequestFailed(Exception e) {

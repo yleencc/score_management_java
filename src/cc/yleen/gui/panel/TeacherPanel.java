@@ -207,7 +207,7 @@ public class TeacherPanel extends BasePanel implements MouseListener, ActionList
         } else if (e.getSource() == itemDelete) {
             int select = JOptionPane.showConfirmDialog(null,
                     "你确定删除这个教师吗?",
-                    "警告 !", JOptionPane.YES_OPTION, JOptionPane.YES_OPTION, new ImageIcon(ImgUtil.getImage("cc/yleen/images/?.png")));
+                    "警告 !", JOptionPane.YES_OPTION, JOptionPane.YES_OPTION, new ImageIcon(ImgUtil.getImage("./images/?.png")));
             if (select == JOptionPane.YES_OPTION) {
                 int row = table.getSelectedRow();
                 Vector line = (Vector) rowData.get(row); // 第row行数据

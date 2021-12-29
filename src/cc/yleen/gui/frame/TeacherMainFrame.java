@@ -65,7 +65,7 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
         height = (int) (ScreenSizeUtil.getHeight() / 1.7);
         this.setBounds((ScreenSizeUtil.getWidth() - width) / 2, (ScreenSizeUtil.getHeight() - height) / 2, width, height);
         this.setTitle("成绩管理系统 - 教师端");
-        this.setIconImage(ImgUtil.getImage("cc/yleen/images/book.png"));
+        this.setIconImage(ImgUtil.getImage("./images/book.png"));
         this.setMinimumSize(new Dimension((int) (width / 1.5), (int) (height / 1.5)));
         this.bgPanel = new BackgroundJPanel();
         this.add(bgPanel);
