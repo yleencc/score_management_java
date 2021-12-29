@@ -91,10 +91,10 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
         JMenuBar jb = new JMenuBar();
         JMenu[] menus;
         JMenuItem[][] items;
-        menus_str = new String[]{"菜单", "其他"};
+        menus_str = new String[]{"菜单"};
         items2_str = new String[][]{
                 {"切换用户"},
-                {"关于作者", "退出"}
+                {"退出"}
         };
         // First level Menus
         menus = new JMenu[menus_str.length];
@@ -117,7 +117,7 @@ public class TeacherMainFrame extends BaseFrame implements ActionListener, ItemL
             new LoginFrame();
             this.dispose();
         });
-        items[1][1].addActionListener(e -> System.exit(0));
+        items[0][1].addActionListener(e -> System.exit(0));
     }
 
     private void initLayout() {
