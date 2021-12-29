@@ -1,13 +1,10 @@
-package cc.yleen.gui;
+package cc.yleen.gui.frame;
 
 import cc.yleen.config.Const;
 import cc.yleen.config.Theme;
 import cc.yleen.dao.LoginDao;
 import cc.yleen.gui.component.DefaultComponents;
 import cc.yleen.gui.component.GBC;
-import cc.yleen.gui.main_frames.AdminMainFrame;
-import cc.yleen.gui.main_frames.StudentMainFrame;
-import cc.yleen.gui.main_frames.TeacherMainFrame;
 import cc.yleen.gui.panel.BackgroundJPanel;
 import cc.yleen.utils.ImgUtil;
 import cc.yleen.utils.MysqlConnect;

@@ -1,8 +1,8 @@
 package cc.yleen.gui.panel;
 
 import cc.yleen.dao.AdminDao;
-import cc.yleen.gui.AddCourseFrame;
-import cc.yleen.gui.BasePanel;
+import cc.yleen.gui.frame.AddCourseFrame;
+import cc.yleen.gui.frame.BasePanel;
 import cc.yleen.gui.component.GBC;
 import cc.yleen.model.Course;
 import cc.yleen.utils.ImgUtil;

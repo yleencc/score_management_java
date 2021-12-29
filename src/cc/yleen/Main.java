@@ -1,6 +1,6 @@
 package cc.yleen;
 
-import cc.yleen.gui.LoginFrame;
+import cc.yleen.gui.frame.LoginFrame;
 
 import java.awt.*;
 

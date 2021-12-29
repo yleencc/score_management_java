@@ -1,8 +1,8 @@
 package cc.yleen.gui.panel;
 
 import cc.yleen.dao.AdminDao;
-import cc.yleen.gui.AddTeacherFrame;
-import cc.yleen.gui.BasePanel;
+import cc.yleen.gui.frame.AddTeacherFrame;
+import cc.yleen.gui.frame.BasePanel;
 import cc.yleen.gui.component.GBC;
 import cc.yleen.model.Teacher;
 import cc.yleen.utils.DateUtil;

@@ -1,4 +1,4 @@
-package cc.yleen.gui;
+package cc.yleen.gui.frame;
 
 import cc.yleen.gui.component.GBC;
 import cc.yleen.gui.panel.CoursePanel;
@@ -7,8 +7,6 @@ import cc.yleen.utils.ScreenSizeUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class AddCourseFrame extends BaseFrame {

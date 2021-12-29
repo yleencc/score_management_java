@@ -1,9 +1,7 @@
-package cc.yleen.gui.main_frames;
+package cc.yleen.gui.frame;
 
 import cc.yleen.config.Theme;
 import cc.yleen.dao.AdminDao;
-import cc.yleen.gui.BaseFrame;
-import cc.yleen.gui.LoginFrame;
 import cc.yleen.gui.component.DefaultComponents;
 import cc.yleen.gui.component.GBC;
 import cc.yleen.gui.panel.BackgroundJPanel;
