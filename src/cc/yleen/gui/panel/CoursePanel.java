@@ -80,7 +80,6 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
         table.addMouseListener(this);
         // 表格修改值的监听
         table.getModel().addTableModelListener(e -> {
-//            int col = e.getColumn();
             int row = e.getFirstRow();
             Vector line = (Vector) rowData.get(row); // 第row行数据
             String cno = (String) line.get(0); // Cno
@@ -113,6 +112,7 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
         });
     }
 
+    // 请求课程信息
     private void requestCourse() throws SQLException {
         rowData.clear(); // 清空表格数据
         courses.clear();
@@ -139,10 +139,6 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
     public void mousePressed(MouseEvent e) {
         //判断是否为鼠标的BUTTON3按钮，BUTTON3为鼠标右键
         if (e.getButton() == MouseEvent.BUTTON3 && e.getSource() == table) {
@@ -154,29 +150,13 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
             // 将表格所选项设为当前右键点击的行
             if (table.getSelectedRowCount() < 2)
                 table.setRowSelectionInterval(focusedRowIndex, focusedRowIndex);
-            //弹出菜单
-            itemDelete.setEnabled(true);
-            menus.show(table, e.getX(), e.getY());
+            itemDelete.setEnabled(true); // 启用删除菜单项
+            menus.show(table, e.getX(), e.getY());// 弹出菜单
         }
         if (e.getButton() == MouseEvent.BUTTON3 && e.getSource() == panel_table) {
-            itemDelete.setEnabled(false);
-            menus.show(panel_table, e.getX(), e.getY());
+            itemDelete.setEnabled(false); // 关闭删除菜单项
+            menus.show(panel_table, e.getX(), e.getY()); // 弹出菜单
         }
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
     }
 
     @Override
@@ -216,4 +196,24 @@ public class CoursePanel extends BasePanel implements MouseListener, ActionListe
             new AddCourseFrame(this);
         }
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
 }

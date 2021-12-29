@@ -70,13 +70,11 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         this.setMinimumSize(new Dimension((int) (width / 1.5), (int) (height / 1.5)));
         this.bgPanel = new BackgroundJPanel();
         this.add(bgPanel);
-        // init
-        initMenuBar();
-        initLayout();
-        initAction();
+        initMenuBar(); // 初始化菜单
+        initLayout(); // 初始化布局
+        initAction(); // 初始化监听事件
         setDisableFormComponents();
         text_title.setIcon(new ImageIcon(LoginFrame.class.getResource("/images/book.png")));
-        // Visible
         this.setVisible(true);
         try {
             requestStudentInfo();
@@ -128,6 +126,20 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         panel_tools.setLayout(new GridBagLayout());
         JLabel label = new JLabel("筛选课程：");
         label.setHorizontalAlignment(SwingConstants.RIGHT);
+        //设置列名
+        columnName = new Vector();
+        rowData = new Vector();
+        columnName.add("学号");
+        columnName.add("学生姓名");
+        columnName.add("课程ID");
+        columnName.add("课程名");
+        columnName.add("课程学分");
+        columnName.add("成绩");
+        // 添加表格
+        model = new DefaultTableModel();
+        model.setDataVector(rowData, columnName);
+        table.setModel(model);
+        panel_grade.setViewportView(table);
         //
         panel_tools.add(button_refresh_table, new GBC(0, 0, 1, 1)
                 .setFill(GBC.HORIZONTAL)
@@ -149,21 +161,6 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
                 .setIpad(0, 0)
                 .setInsets(0, 10, 0, 0)
                 .setWeight(20, 20));
-
-        //设置列名
-        columnName = new Vector();
-        rowData = new Vector();
-        columnName.add("学号");
-        columnName.add("学生姓名");
-        columnName.add("课程ID");
-        columnName.add("课程名");
-        columnName.add("课程学分");
-        columnName.add("成绩");
-        // 添加表格
-        model = new DefaultTableModel();
-        model.setDataVector(rowData, columnName);
-        table.setModel(model);
-        panel_grade.setViewportView(table);
         //
         bgPanel.add(panel_student_info, new GBC(0, 0, 1, 5)
                 .setFill(GBC.BOTH)
@@ -288,6 +285,7 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         select_course.addItemListener(this);
     }
 
+    // 请求学生的信息
     private void requestStudentInfo() throws SQLException {
         this.student = studentDao.getStudentInfo(this.sno);
         text_sno.setText(student.getSno());
@@ -300,6 +298,7 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         input_birthday.setText(day);
     }
 
+    // 请求学生的成绩记录
     private void requestGrade() throws SQLException {
         select_course.removeAllItems(); // 清空课程的所有选项
         select_course.addItem("全部");
@@ -320,6 +319,7 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         table.updateUI();
     }
 
+    // 当默认情况和点击保存的时候，关闭表单控件
     private void setDisableFormComponents() {
         select_sex.setEnabled(false);
         input_name.setEnabled(false);
@@ -329,6 +329,7 @@ public class StudentMainFrame extends BaseFrame implements ActionListener, ItemL
         input_birthday.setEnabled(false);
     }
 
+    // 当点击编辑的时候，启用表单控件
     private void setEnableFormComponents() {
         select_sex.setEnabled(true);
         input_name.setEnabled(true);

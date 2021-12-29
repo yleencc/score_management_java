@@ -16,16 +16,13 @@ import java.awt.event.*;
 import java.sql.SQLException;
 
 public class LoginFrame extends BaseFrame {
-    LoginDao loginDao = new LoginDao();
+    LoginDao loginDao = new LoginDao(); // 登陆的Dao执行类
     private Const.AccountType type = Const.AccountType.student; // 用户类型
 
     private JLabel title = DefaultComponents.getJLabel("成绩管理系统 - 登录页", titleFont);
     private JLabel text_account = DefaultComponents.getJLabel("帐号/学号：");
     private JLabel text_pass = DefaultComponents.getJLabel("密码：");
     private JLabel text_type = DefaultComponents.getJLabel("用户类型：");
-    private JLabel text_student = DefaultComponents.getJLabel("学生");
-    private JLabel text_teacher = DefaultComponents.getJLabel("教师");
-    private JLabel text_admin = DefaultComponents.getJLabel("管理员");
 
     private JTextField input_account = new JTextField(12);
     private JTextField input_pass = new JTextField(10);
@@ -36,8 +33,10 @@ public class LoginFrame extends BaseFrame {
     private JRadioButton radio_teacher = new JRadioButton("教师");
     private JRadioButton radio_admin = new JRadioButton("管理员");
 
-    static Font titleFont = new Font(Theme.Font_.NORMAL.getName(), Theme.Font_.NORMAL.getStyle(), Theme.Font_.NORMAL.getSize() + 12); // 标题的字体
-    static Font loginButtonFont = new Font(Theme.Font_.NORMAL.getName(), Font.BOLD, Theme.Font_.NORMAL.getSize() + 4); // 登录按钮的字体
+    static Font titleFont = new Font(Theme.Font_.NORMAL.getName(), Theme.Font_.NORMAL.getStyle(),
+            Theme.Font_.NORMAL.getSize() + 12); // 标题的字体
+    static Font loginButtonFont = new Font(Theme.Font_.NORMAL.getName(), Font.BOLD,
+            Theme.Font_.NORMAL.getSize() + 4); // 登录按钮的字体
     private Color colorForeground = new Color(0xF5DCDCDC, true);
     private Color colorbackground = new Color(0x48969B);
     private Color colorForegroundHover = new Color(0xF5EBEBEB, true);
@@ -47,39 +46,35 @@ public class LoginFrame extends BaseFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         width = (int) (ScreenSizeUtil.getHeight() / 2);
         height = (int) (ScreenSizeUtil.getHeight() / 1.8);
-//        this.setBounds(width, height, width, height);
-        this.setBounds((ScreenSizeUtil.getWidth() - width) / 2, (ScreenSizeUtil.getHeight() - height) / 2, width, height);
+        this.setBounds((ScreenSizeUtil.getWidth() - width) / 2,
+                (ScreenSizeUtil.getHeight() - height) / 2, width, height);
         this.setMinimumSize(new Dimension(width, height));
         this.setTitle("成绩管理系统");
         this.setIconImage(ImgUtil.getImage("./images/book.png"));
         bgPanel = new BackgroundJPanel();
         bgPanel.setBg("./images/bg.png");
-        initView();
-        setTextColor();
-        initAction();
+        initView(); // 初始化视图
+        setTextColor(); // 设置字体
+        initAction(); // 初始化监听事件
         radio_student.doClick();
         this.add(bgPanel);
         this.setVisible(true);
-//        input_account.setText("admin");
-//        input_pass.setText("admin");
-//        radio_admin.doClick();
     }
 
     private void initView() {
         bgPanel.setLayout(new GridBagLayout());
         title.setIcon(new ImageIcon(LoginFrame.class.getResource("/images/book.png")));
-        // setting login button
+        // 登陆按钮
         login.setBorderPainted(true);
         login.setBorder(null);
         login.setOpaque(true);
         login.setForeground(colorForeground);
         login.setBackground(colorbackground);
         login.setFont(loginButtonFont);
-        // SQL group
         group_user.add(radio_student);
         group_user.add(radio_teacher);
         group_user.add(radio_admin);
-        // Initialize the layout of components.
+        // 设定布局
         bgPanel.add(title, new GBC(0, 0, 8, 1)
                 .setFill(GBC.CENTER)
                 .setIpad(0, 0)
