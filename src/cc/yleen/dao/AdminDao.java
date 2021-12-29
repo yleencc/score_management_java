@@ -108,7 +108,6 @@ public class AdminDao implements AdminDaoInter {
         ppst.setString(1, course.getName());
         ppst.setFloat(2, course.getCredit());
         ppst.setString(3, course.getCno());
-        ppst.setString(4, course.getCno());
         return ppst.executeUpdate();
     }
 
